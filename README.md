@@ -19,7 +19,7 @@ Não escondo o meu desejo sincero de contribuir com a comunidade de dados, espec
 ---
 
 
-##⚠️⚠️⚠️ Boas Práticas e Pontos de Atenção ⚠️⚠️⚠️
+## ⚠️⚠️⚠️ Boas Práticas e Pontos de Atenção ⚠️⚠️⚠️
 
 Independente do pipeline que você estiver construindo, **é fundamental seguir uma lógica bem definida**. Abaixo estão as principais etapas que qualquer pipeline robusto costuma seguir, junto de perguntas-chave que devem ser respondidas em cada uma delas.
 
@@ -91,7 +91,7 @@ Responder essas perguntas com clareza desde o início aumenta muito as chances d
 
 ---
 
-##Stack Tecnológica
+## Stack Tecnológica
 
 Este repositório utiliza diferentes stacks dependendo do tipo de pipeline. Usarei predominantemente Python e SQL. Porém, também vou utilizar outras ferramentas como Apache Airflow, Apache Kafka, Arquivos CSV, AWS, dbt.... Vou ir atualizando conforme o andamento de cada projeto
 
@@ -110,24 +110,17 @@ Cada pasta representa uma simulação de pipeline ou situação recorrente no un
 
 ### Pipeline 1 — Nome do Pipeline
 
-> Pequena descrição do que esse pipeline resolve.  
-> Exemplo: "ETL de arquivos CSV para banco de dados relacional com tratamento de dados faltantes"
-
-- **Linguagem/Ferramentas utilizadas:** Python, Pandas, PostgreSQL  
-- **Como executar:** Instruções dentro da pasta correspondente  
+Pode ser encontrado em: [Pipeline01 no GitHub](https://github.com/jrodrigomoraes/Engenharia-de-Dados-Na-Pratica-e-Dia-a-Dia/tree/main/Pipeline01)
 
 ---
 
-### 🔧 Pipeline 2 — Nome do Pipeline
+### Pipeline 2 — Nome do Pipeline
 
-> Exemplo: "Ingestão de dados em tempo real com Kafka + processamento com Spark Streaming"
-
-- **Linguagem/Ferramentas utilizadas:** Apache Kafka, Spark, Docker  
-- **Como executar:** Instruções dentro da pasta correspondente  
+Ainda vou detalhar
 
 ---
 
-*Vou ir adicionando situações com o passar dos dias*
+**Vou ir adicionando situações com o passar dos dias**
 
 ---
 
@@ -146,7 +139,7 @@ Se quiser contribuir:
 
 Dúvidas, sugestões ou ideias? Fique à vontade para entrar em contato:
 
-- [Email](jrodrigomoraes016@gmail.com)
+- [Email](mailto:jrodrigomoraes016@gmail.com)
 
 ---
 
