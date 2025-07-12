@@ -50,15 +50,13 @@ Cada um é um bloco isolado para garantir modularidade e escalabilidade. Pensand
 
 
 
-\## Código Principal
+## Código Principal
 
 ` run\_pipeline.py  `
 
 
 
-\## Formas de executar automaticamente
-
-
+## Formas de executar automaticamente
 
 1. CronJob ou Agendador de Tarefas (Task Scheduler)
 2. Apache Airflow ou GitHub Actions
