@@ -18,7 +18,7 @@ O Script geral de Validação é o ` validation.py `
 
 O Script geral de leitura é o ` load.py `
 
-- A escola pelo formato Parquet não é aleatória. É uma escolha popular de armazenamento de dados em pipelines de engenharia de dados por ser um formato colunar e altamente otimizado para grandes volumes de dados. Oferecendo vantagens como:  
+- A escolha pelo formato Parquet não é aleatória. É uma escolha popular de armazenamento de dados em pipelines de engenharia de dados por ser um formato colunar e altamente otimizado para grandes volumes de dados. Oferecendo vantagens como:  
 1. Eficiência: Armazena dados de forma compactada e eficiente, reduzindo o espaço necessário
 2. Desempenho em Leitura e Processamento: Ele permite a leitura seletiva de colunas, o que acelera operações de consulta
 3. Compatibilidade com Ferramentas Big Data: Suportado em ferramentas como Apache Spark, Hive, e Hadoop
