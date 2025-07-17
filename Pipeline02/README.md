@@ -1,8 +1,6 @@
-## Situação Comum 1
+## Situação Comum 2
 
-Uma circunstância comum na vida de um engenheiro de dados é: Fazer a ingestão de dados(muitas vezes arquivos csv) para o SQL.
-
-Entretanto, apesar de parecer simples, algumas etapas precisam ser seguidas para tudo ocorrer bem.
+A situação agora analisada é a integração com APIs REST: É uma prática comum em engenharia de dados, especialmente para ingestão de dados de fontes externas. Muitas vezes, essas APIs fornecem informações em tempo real ou atualizadas periodicamente, e é fundamental que o engenheiro de dados saiba consumir, tratar e armazenar esses dados de forma eficiente e confiável.
 
 ### 1\. Leitura
 
@@ -19,6 +17,12 @@ O Script geral de Validação é o ` validation.py `
 ### 4\. Carga
 
 O Script geral de leitura é o ` load.py `
+
+- A escola pelo formato Parquet não é aleatória. É uma escolha popular de armazenamento de dados em pipelines de engenharia de dados por ser um formato colunar e altamente otimizado para grandes volumes de dados. Oferecendo vantagens como:  
+1. Eficiência: Armazena dados de forma compactada e eficiente, reduzindo o espaço necessário
+2. Desempenho em Leitura e Processamento: Ele permite a leitura seletiva de colunas, o que acelera operações de consulta
+3. Compatibilidade com Ferramentas Big Data: Suportado em ferramentas como Apache Spark, Hive, e Hadoop
+4. Tipagem Rígida: Oferece tipagem de dados, o que ajuda a garantir consistência e integridade nos dados 
 
 ## 5\. Outras Funções
 
