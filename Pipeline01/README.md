@@ -16,7 +16,7 @@ A abordagem segue uma lógica que prioriza consistência e rastreabilidade.
 
 ## Contexto
 
-Temos uma aplicação que recebe diariamente um arquivo com dados de usuários provenientes de uma operação externa. O arquivo contém as colunas
+Temos uma aplicação que recebe diariamente um arquivo com dados de usuários provenientes de uma operação externa. O arquivo contém as colunas:  
 id: identificador do usuário  
 nome: nome completo  
 email: email do usuário  
