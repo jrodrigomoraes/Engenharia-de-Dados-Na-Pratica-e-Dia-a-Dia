@@ -6,11 +6,25 @@ Entretanto, apesar de parecer simples, algumas etapas precisam ser seguidas para
 
 ### 1\. Leitura
 
+O Script geral de leitura é o ` ingestion.py `
+
 ### 2\. Transformação
+
+O Script geral de transformação é o ` transformation.py `
 
 ### 3\. Validação
 
+O Script geral de Validação é o ` validation.py `
+
 ### 4\. Carga
+
+O Script geral de leitura é o ` load.py `
+
+##5\. Outras Funções
+
+` utils.py ` funções para logs, configs, etc...
+` run_pipeline.py ` script principal de orquestração
+
 
 A abordagem segue uma lógica que prioriza consistência e rastreabilidade.
 
@@ -54,9 +68,29 @@ Cada um é um bloco isolado para garantir modularidade e escalabilidade. Pensand
 
 ` run\_pipeline.py  `
 
-
-
 ## Formas de executar automaticamente
 
 1. CronJob ou Agendador de Tarefas (Task Scheduler)
 2. Apache Airflow ou GitHub Actions
+
+## Boas Práticas Adotadas nesse Pipeline
+
+- Modularizar cada etapa do pipeline com funções independentes
+- Validar os campos, antes da transformação
+- A mesma execução irá gerar os mesmos resultados
+- Utilizar logs para rastrear volume total, descartes e registros persistidos
+- Caminhos dinâmicos para evitar hardcoded
+
+## Expansões
+
+- Detectar e armazenar registros inválidos em uma tabela separada
+- Enviar alertas por e-mail em caso de alta taxa de erro
+- Inserir apenas novos registros com base em comparação de IDs
+
+## Performance
+
+Caso seja uma base muito grande de registros, adote passos como:
+- Utilizar leitura em chunks
+- Utilizar métodos vetorizados sempre que possível
+- Fazer persistência em lote com transações controladas
+- Evitar operações inplace e preferir atribuições diretas
