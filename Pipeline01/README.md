@@ -17,9 +17,9 @@ A abordagem segue uma lógica que prioriza consistência e rastreabilidade.
 ## Contexto
 
 Temos uma aplicação que recebe diariamente um arquivo com dados de usuários provenientes de uma operação externa. O arquivo contém as colunas
-id: identificador do usuário
-nome: nome completo
-email: email do usuário
+id: identificador do usuário  
+nome: nome completo  
+email: email do usuário  
 idade: idade do usuário
 
 Vamos salvar esse arquivo e processa-lo automaticamente, realizando as etapas acima. O objetivo é que o arquivo final, esteja livre de inconsistências.
