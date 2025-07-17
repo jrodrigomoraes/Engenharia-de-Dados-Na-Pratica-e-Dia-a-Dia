@@ -108,7 +108,7 @@ Se quiser contribuir com melhorias ou compartilhar seus próprios pipelines, **p
 
 Cada pasta representa uma simulação de pipeline ou situação recorrente no universo da engenharia de dados.
 
-### Pipeline 1 — Nome do Pipeline
+### Pipeline 1 — Ingestão em arquivos CSV e Carga em Bancos Relacionais
 
 Pode ser encontrado em: [Pipeline01 no GitHub](https://github.com/jrodrigomoraes/Engenharia-de-Dados-Na-Pratica-e-Dia-a-Dia/tree/main/Pipeline01)
 
