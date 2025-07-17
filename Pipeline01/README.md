@@ -20,7 +20,7 @@ O Script geral de Validação é o ` validation.py `
 
 O Script geral de leitura é o ` load.py `
 
-##5\. Outras Funções
+## 5\. Outras Funções
 
 ` utils.py ` funções para logs, configs, etc...
 ` run_pipeline.py ` script principal de orquestração
