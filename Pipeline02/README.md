@@ -80,22 +80,18 @@ Cada um é um bloco isolado para garantir modularidade e escalabilidade. Pensand
 
 ## Boas Práticas Adotadas nesse Pipeline
 
-- Modularizar cada etapa do pipeline com funções independentes
+- Modularizar cada etapa do pipeline com funções independentes e tratamento dos dados
 - Validar os campos, antes da transformação
-- A mesma execução irá gerar os mesmos resultados
-- Utilizar logs para rastrear volume total, descartes e registros persistidos
-- Caminhos dinâmicos para evitar hardcoded
+- Saída com formato compatível com os objetivos do Pipeline
+- Utilizar logs para rastrear volume total e status
 
 ## Expansões
 
-- Detectar e armazenar registros inválidos em uma tabela separada
-- Enviar alertas por e-mail em caso de alta taxa de erro
-- Inserir apenas novos registros com base em comparação de IDs
+- Parâmetros dinâmicos por data/hora
+- Criação de partições por data no Parquet
+- Publicação automática em data lake, S3 ou GCP
+- Agendamento com orquestradores como Apache Airflow
 
-## Performance
+## Conclusão
 
-Caso seja uma base muito grande de registros, adote passos como:
-- Utilizar leitura em chunks
-- Utilizar métodos vetorizados sempre que possível
-- Fazer persistência em lote com transações controladas
-- Evitar operações inplace e preferir atribuições diretas
+A extração de dados via API requer cuidados com o fluxo, a organização e a escolha do formato de armazenamento. Usar Parquet oferece uma forma eficiente e rápida de trabalhar com dados analíticos. Este pipeline resolve o desafio de integrar APIs externas ao processo de forma segura e eficiente. Em sistemas grandes, ele é a base para fluxos automáticos e escaláveis.

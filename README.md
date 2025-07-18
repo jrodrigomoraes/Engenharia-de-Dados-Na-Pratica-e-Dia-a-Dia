@@ -114,9 +114,15 @@ Pode ser encontrado em: [Pipeline01 no GitHub](https://github.com/jrodrigomoraes
 
 ---
 
-### Pipeline 2 — Nome do Pipeline
+### Pipeline 2 — Extração de Dados via API REST e Armazenamento Parquet
 
-Ainda vou detalhar
+Pode ser encontrado em: [Pipeline02 no GitHub](https://github.com/jrodrigomoraes/Engenharia-de-Dados-Na-Pratica-e-Dia-a-Dia/tree/main/Pipeline02)
+
+---
+
+### Pipeline 3 - Trabalhando nele
+
+Ainda em construção....
 
 ---
 
