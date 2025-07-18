@@ -1,8 +1,9 @@
-import pandas as pd
+import requests
+import json
 
-def read_csv(file_path):
-    try:
-        df = pd.read_csv(file_path)
-        return df
-    except Exception as e:
-        raise Exception(f"Erro ao ler o arquivo CSV: {e}")
+def fetch_data_from_api(url, headers):
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.json()  #Retorna os dados em formato JSON
+    else:
+        raise Exception(f"Erro ao acessar API: {response.status_code}")

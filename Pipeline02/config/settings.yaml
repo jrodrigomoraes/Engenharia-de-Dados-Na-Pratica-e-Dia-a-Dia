@@ -1,0 +1,17 @@
+# Configuração de API
+api:
+  url: "https://api.exemplo.com/usuarios"
+  headers:
+    Authorization: "Bearer YOUR_API_KEY"
+
+# Caminhos para os dados
+paths:
+  raw_data_dir: "data/raw/"
+  processed_data_dir: "data/processed/"
+  rejected_data_dir: "data/rejected/"
+
+# Parâmetros de validação
+validation:
+  email_regex: "^[\\w\\.-]+@[\\w\\.-]+\\.\\w+$"
+  phone_regex: "^\\+?[0-9]{10,15}$"
+  website_regex: "^https?:\\/\\/[\\w\\-\\.]+\\.\\w+.*$"

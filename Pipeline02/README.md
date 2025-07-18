@@ -21,7 +21,7 @@ O Script geral de leitura é o ` load.py `
 - A escolha pelo formato Parquet não é aleatória. É uma escolha popular de armazenamento de dados em pipelines de engenharia de dados por ser um formato colunar e altamente otimizado para grandes volumes de dados. Oferecendo vantagens como:  
 1. Eficiência: Armazena dados de forma compactada e eficiente, reduzindo o espaço necessário
 2. Desempenho em Leitura e Processamento: Ele permite a leitura seletiva de colunas, o que acelera operações de consulta
-3. Compatibilidade com Ferramentas Big Data: Suportado em ferramentas como Apache Spark, Hive, e Hadoop
+3. Compatibilidade com Ferramentas Big Data: Suportado em ferramentas como Apache Spark, Hive, Hadoop, AWS Athena e BigQuery
 4. Tipagem Rígida: Oferece tipagem de dados, o que ajuda a garantir consistência e integridade nos dados 
 
 ## 5\. Outras Funções
@@ -34,11 +34,13 @@ A abordagem segue uma lógica que prioriza consistência e rastreabilidade.
 
 ## Contexto
 
-Temos uma aplicação que recebe diariamente um arquivo com dados de usuários provenientes de uma operação externa. O arquivo contém as colunas:  
-id: identificador do usuário  
+Vamos assumir como origem uma API REST pública que entrega dados em formato JSON. Cada chamada retorna uma lista de objetos estruturados, representando registros de usuários. A estrutura é a seguinte:
+
+id: identificador numérico único  
 nome: nome completo  
 email: email do usuário  
-idade: idade do usuário
+telefone: idade do usuário
+website: site ou URL pessoal
 
 Vamos salvar esse arquivo e processa-lo automaticamente, realizando as etapas acima. O objetivo é que o arquivo final, esteja livre de inconsistências.
 
@@ -51,21 +53,20 @@ Vamos salvar esse arquivo e processa-lo automaticamente, realizando as etapas ac
 
 * Python
 * Pandas
-* SQL
+* json
+* Parquet
+* APIs
 
 ## Arquitetura da Solução
 
-1. Leitura do arquivo CSV
-2. Identificação e descarte de registros inválidos
-3. Validação semântica dos campos
+1. Automatizar a chamada à API
+2. Validar as respostas e salvar em um DataFrame
+3. Aplicar filtros e Verificações
 4. Conversão de tipos com segurança
-5. Carga dos dados válidos
+5. Armazenar o resultado no formato Parquet
 6. Log de execução e verificação da integridade
 
 Cada um é um bloco isolado para garantir modularidade e escalabilidade. Pensando também, em auditorias fáceis de se realizar.
-
-
-
 
 
 ## Código Principal
