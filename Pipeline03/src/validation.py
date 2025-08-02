@@ -1,21 +1,32 @@
-import re
+import pandas as pd
+from utils import setup_logger
+
+#Inicializa logger
+logger = setup_logger()
 
 def validate_data(df):
-    #Definindo expressões regulares para validação das categorias email, telefone e website
-    email_regex = r'^[\w\.-]+@[\w\.-]+\.\w+$'
-    phone_regex = r'^\+?[0-9]{10,15}$'  # Ex: +5511999999999 ou 11999999999
-    website_regex = r'^https?:\/\/[\w\-\.]+\.\w+.*$'
+    """Valida a integridade e qualidade dos dados com checagens mínimas."""
+    
+    #Verificar colunas obrigatórias
+    required_columns = ['id_transacao', 'valor', 'categoria', 'data', 'id_cliente', 'ano_mes', 'categoria_valor']
+    if not all(col in df.columns for col in required_columns):
+        logger.error(f"Colunas obrigatórias ausentes!")
+        return False
 
-    #Criando Máscaras de validação
-    valid_email = df['email'].str.match(email_regex, na=False)
-    valid_phone = df['telefone'].str.match(phone_regex, na=False)
-    valid_website = df['website'].str.match(website_regex, na=False)
+    #Verificar valores nulos
+    if df.isnull().any().any():
+        logger.error("Dados nulos encontrados.")
+        return False
 
-    #Validação combinada: todos os campos devem estar válidos
-    valid_mask = valid_email & valid_phone & valid_website
+    #Verificar valores negativos na coluna 'valor'
+    if (df['valor'] < 0).any():
+        logger.error("Valores negativos encontrados na coluna 'valor'.")
+        return False
 
-    #Separando válidos e inválidos
-    df_valid = df[valid_mask]
-    df_invalid = df[~valid_mask]
+    #Verificar unicidade do 'id_transacao'
+    if not df['id_transacao'].is_unique:
+        logger.error("A coluna 'id_transacao' não é única.")
+        return False
 
-    return df_valid, df_invalid
+    logger.info("Validação concluída com sucesso.")
+    return True
