@@ -16,7 +16,7 @@ O Script geral de Validação é o ` validation.py `
 
 ### 4\. Carga
 
-O Script geral de leitura é o ` load.py `
+O Script geral de carga é o ` load.py `
 
 - A escolha pelo formato Parquet não é aleatória. É uma escolha popular de armazenamento de dados em pipelines de engenharia de dados por ser um formato colunar e altamente otimizado para grandes volumes de dados. Oferecendo vantagens como:  
 1. Eficiência: Armazena dados de forma compactada e eficiente, reduzindo o espaço necessário
