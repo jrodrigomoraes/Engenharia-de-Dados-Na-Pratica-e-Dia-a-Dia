@@ -120,9 +120,21 @@ Pode ser encontrado em: [Pipeline02 no GitHub](https://github.com/jrodrigomoraes
 
 ---
 
-### Pipeline 3 - Trabalhando nele
+### Pipeline 3 - Transformação de Dados e Envio ao Data Lake
 
-Ainda em construção....
+Pode ser encontrado em: [Pipeline03 no GitHub](https://github.com/jrodrigomoraes/Engenharia-de-Dados-Na-Pratica-e-Dia-a-Dia/tree/main/Pipeline03)
+
+---
+
+### Pipeline 4 - Em construção...
+
+Em produção...
+
+---
+
+### Pipeline 5 - Em construção...
+
+Em produção...
 
 ---
 
