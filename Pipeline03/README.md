@@ -15,7 +15,7 @@ Para que os dados cheguem até essa fase com qualidade e consistência, é neces
 - Criar variáveis derivadas relevantes  
 - Gerar coluna "ano-mês" para particionamento futuro  
 - Salvar em formato **Parquet**  
-- Enviar os dados processados para o **Amazon S3**
+- Enviar os dados processados para o **Amazon S3** ou **Google Cloud Storage**
 
 ---
 
@@ -48,7 +48,7 @@ A seguir, os campos presentes no conjunto de dados utilizado:
 - **Transformação**: Uso de **pandas** para limpeza e enriquecimento  
 - **Validação**: Regras de negócio aplicadas com lógica customizada  
 - **Formato de saída**: Arquivo **Parquet**, otimizado para leitura e compressão  
-- **Destino**: Envio para **Amazon S3** via **boto3**  
+- **Destino**: Envio para **Amazon S3** via **boto3** (Também podia ser o GCS via gcsfs)  
 - **Logs & Observabilidade**: Registro de logs locais e tratamento de erros  
 
 > Cada etapa do pipeline foi estruturada como um bloco isolado, garantindo **modularidade**, **escalabilidade** e facilitando processos de **auditoria e rastreabilidade**.
@@ -73,7 +73,7 @@ A seguir, os campos presentes no conjunto de dados utilizado:
 - boto3  
 - CSV  
 - Parquet  
-- Amazon S3  
+- Amazon S3 / Google Cloud Storage (GCS)
 
 ---
 
@@ -91,14 +91,17 @@ O pipeline pode ser executado automaticamente utilizando:
 
 - Modularizar cada etapa do pipeline com funções independentes e tratamento dos dados
 - Validar os campos, antes da transformação
-- Saída com formato compatível com os objetivos do Pipeline
+- Saída com formato compatível com os objetivos do Pipeline, ou seja, garantir consistência de Schema
 - Utilizar logs para rastrear volume total e status
+- Trabalhar com datetime em formato nativo do pandas
+- Controle de credenciais
+- Manter nomes de arquivos padronizados com data ou partição
 
 ---
 
 ## Expansões
 
-- Parâmetros dinâmicos por data/hora
+- Tarefas de Enriquecimento com dados externos (via merge)
 - Criação de partições por data no Parquet
 - Publicação automática em data lake, S3 ou GCP
 - Agendamento com orquestradores como Apache Airflow
@@ -107,4 +110,4 @@ O pipeline pode ser executado automaticamente utilizando:
 
 ## Conclusão
 
-A extração de dados via API requer cuidados com o fluxo, a organização e a escolha do formato de armazenamento. Usar Parquet oferece uma forma eficiente e rápida de trabalhar com dados analíticos. Este pipeline resolve o desafio de integrar APIs externas ao processo de forma segura e eficiente. Em sistemas grandes, ele é a base para fluxos automáticos e escaláveis.
+A transformação de dados com Pandas e o envio para um data lake unem a preparação analítica à arquitetura distribuída. O pipeline aplica limpeza, enriquecimento e formatação antes da entrega para consumo em larga escala. O uso do formato Parquet e das bibliotecas boto3 ou gcsfs garante compatibilidade com a nuvem, enquanto validações asseguram a confiabilidade dos dados. Dominar essas técnicas é essencial para engenheiros de dados em ambientes produtivos.
