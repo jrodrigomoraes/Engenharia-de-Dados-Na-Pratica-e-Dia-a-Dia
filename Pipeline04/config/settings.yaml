@@ -1,0 +1,27 @@
+# Configurações de caminhos e diretórios
+paths:
+  raw_data_dir: "data/raw/"  # Diretório para os dados brutos
+  processed_data_dir: "data/processed/"  # Diretório para os dados processados
+  rejected_data_dir: "data/rejected/"  # Diretório para dados rejeitados
+
+#Configurações de ingestão de dados
+ingestion:
+  raw_file: "data/raw/transactions.csv"  # Caminho para o arquivo de entrada (CSV)
+  intermediate_file: "data/processed/ingested.parquet"  # Caminho para salvar os dados ingeridos antes da transformação
+  required_columns:
+    - "id_transacao"
+    - "valor"
+    - "categoria"
+    - "data"
+    - "id_cliente"
+
+# Parâmetros de transformação de dados
+transformation:
+  classifica_valor:
+    alto_threshold: 500  # Valor acima de 500 é classificado como 'alto'
+    baixo_threshold: 50  # Valor abaixo de 50 é classificado como 'baixo'
+
+#Configurações de load (S3)
+load:
+  s3_bucket_name: "bucket-name"  # Nome do seu bucket no S3
+  s3_processed_data_path: "data/processed/"  #Caminho dentro do bucket para armazenar os dados processados
