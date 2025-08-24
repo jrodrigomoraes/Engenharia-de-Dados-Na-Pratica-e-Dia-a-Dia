@@ -1,18 +1,23 @@
-import logging
+from loguru import logger
+import os
 
-def setup_logger():
-    logger = logging.getLogger('pipeline_logger')
-    logger.setLevel(logging.INFO)
-    
-    #Criando o handler para log no arquivo
-    file_handler = logging.FileHandler('logs/pipeline.log')
-    file_handler.setLevel(logging.INFO)
-    
-    #Criando o formatador para formatar as mensagens
-    formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-    file_handler.setFormatter(formatter)
-    
-    #Adicionando o handler ao logger
-    logger.addHandler(file_handler)
-    
-    return logger
+# Diretório onde o log será armazenado
+LOG_DIR = "logs"
+os.makedirs(LOG_DIR, exist_ok=True)
+
+# Nome fixo para o log do pipeline
+LOG_FILE = os.path.join(LOG_DIR, "pipeline.log")
+
+#Remove o logger padrão para evitar duplicações
+logger.remove()
+
+#Adicionar um novo logger com formato personalizado
+logger.add(
+    LOG_FILE,
+    level="INFO",
+    format="{time:YYYY-MM-DD HH:mm:ss} - {level} - {message}",
+    rotation="10 MB",        # Rotaciona o log ao atingir 10 MB
+    retention="7 days",      # Mantém logs antigos por 7 dias
+)
+
+__all__ = ["logger"]

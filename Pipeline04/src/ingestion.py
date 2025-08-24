@@ -1,50 +1,37 @@
-import pandas as pd
 import os
-import yaml
-from utils import setup_logger
+from scripts.utils import logger
 
-#Inicializa logger
-logger = setup_logger()
-
-#Função para carregar as configurações do arquivo YAML
-def load_settings():
-    with open("settings.yaml", "r") as f:
-        settings = yaml.safe_load(f)
-    return settings
-
-#Carregar configurações
-settings = load_settings()
-
-#Caminhos de entrada e saída, que são configuráveis
-RAW_DATA_PATH = os.path.join(settings['pipeline']['raw_data_dir'], settings['pipeline']['raw_data_file'])
-INTERMEDIATE_PATH = os.path.join(settings['pipeline']['processed_data_dir'], 'ingested.parquet')
-
-#Colunas obrigatórias, com base no que imaginei para o arquivo (totalmente modificável)
-REQUIRED_COLUMNS = ['id_transacao', 'valor', 'categoria', 'data', 'id_cliente']
-
-def read_csv(file_path=RAW_DATA_PATH):
-    """Lê o CSV bruto e valida as colunas essenciais."""
-    try:
-        logger.info(f"Lendo arquivo CSV: {file_path}")
-        df = pd.read_csv(file_path)
-
-        missing_cols = [col for col in REQUIRED_COLUMNS if col not in df.columns]
-        if missing_cols:
-            raise ValueError(f"Colunas ausentes: {missing_cols}")
-
-        logger.info(f"Arquivo lido com sucesso. Total de registros: {len(df)}")
-        return df
-
-    except Exception as e:
-        logger.error(f"Erro ao ler o arquivo CSV: {e}")
-        raise
-
-def save_parquet(df, output_path=INTERMEDIATE_PATH):
-    """Salva o DataFrame como arquivo Parquet intermediário."""
-    try:
-        os.makedirs(os.path.dirname(output_path), exist_ok=True)
-        df.to_parquet(output_path, index=False)
-        logger.info(f"Arquivo Parquet salvo em: {output_path}")
-    except Exception as e:
-        logger.error(f"Erro ao salvar arquivo Parquet: {e}")
-        raise
+def ler_novos_logs(caminho_log: str, posicao_anterior: int = 0) -> (list[str], int):
+    """
+    Lê apenas as novas linhas adicionadas a um arquivo de log desde a última posição
+    
+    :param caminho_log: Caminho para o arquivo de log
+    :param posicao_anterior: Posição anterior do ponteiro no arquivo
+    :return: Lista as novas linhas e nova posição
+    
+    """
+    
+    if not os.path.exists(caminho_log):
+        logger.warning(f'Arquivo de log não encontrado: {caminho_log}')
+        return [], posicao_anterior
+        
+    novas_linhas = []
+    with open(caminho_log, 'r', encoding='utf-8') as f:
+        f.seek(posicao_anterior)
+        novas_linhas = f.readlines()
+        nova_posicao = f.tell()
+        
+    logger.info(f'Lidas {len(novas_linhas)} novas linhas do log.')
+    return novas_linhas, nova_posicao
+    
+#Funções para salvar e carregar posição respectivamente, são funções auxiliares
+#No arquivo run_pipeline.py, fica bem claro o papel delas
+def salvar_posicao(caminho_pos: str, posicao: int):
+    with open(caminho_pos, 'w') as f:
+        f.write(str(posicao))
+        
+def carregar_posicao(caminho_pos: str) -> int:
+    if os.path.exists(caminho_pos):
+        with open(caminho_pos, 'r') as f:
+            return int(f.read())
+    return 0
