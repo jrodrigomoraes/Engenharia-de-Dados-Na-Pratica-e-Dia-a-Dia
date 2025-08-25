@@ -37,7 +37,7 @@ def transformar_linhas_em_dataframe(linhas: list[str]) -> pd.DataFrame:
         
     if not registros:
         logger.info('Nenhuma linha válida encontrada.')
-        return pd.Dataframe() #dataframe vazio é retornado
+        return pd.DataFrame() #dataframe vazio é retornado
         
     df = pd.DataFrame(registros)
     
