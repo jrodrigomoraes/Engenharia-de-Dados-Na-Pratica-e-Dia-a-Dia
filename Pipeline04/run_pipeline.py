@@ -1,44 +1,62 @@
-import pandas as pd
-from src.ingestion import read_csv, save_parquet
-from src.transformation import transform_data
-from src.validation import validate_data
-from src.load import save_parquet_to_s3
-from src.utils import setup_logger
+import os
+from scripts.ingestion import ler_novos_logs, salvar_posicao, carregar_posicao
+from scripts.transformation import transformar_linhas_em_dataframe
+from scripts.validation import validar_dataframe
+from scripts.load import salvar_em_parquet, enviar_para_s3
+from scripts.utils import setup_logger, carregar_config
 
-# Inicializa o logger
-logger = setup_logger()
+def main():
+    #Carregar configurações
+    config = carregar_config()
+    
+    #Setup do logger
+    logger = setup_logger(config["paths"]["log_file"])
+    logger.info("Iniciando pipeline de processamento de logs...")
 
-# Caminhos
-RAW_DATA_PATH = 'data/input/transactions.csv'
-INTERMEDIATE_PATH = 'data/processed/ingested.parquet'
-PROCESSED_PATH = 'data/processed/processed.parquet'
+    #Definições de caminhos e parâmetros
+    raw_dir = config["paths"]["raw_data_dir"]
+    processed_dir = config["paths"]["processed_data_dir"]
+    output_dir = config["paths"]["output_data_dir"]
+    extensoes = tuple(config["ingestion"]["file_extensions"])
+    recursive = config["ingestion"]["recursive"]
 
-def run_pipeline():
-    try:
-        #Passo 1: Ingestão dos dados
-        logger.info("Iniciando a ingestão de dados...")
-        df = read_csv(RAW_DATA_PATH)  # Lê o arquivo CSV
-        save_parquet(df, INTERMEDIATE_PATH)  # Salva como Parquet intermediário
+    #Caminho para o arquivo de log principal (por enquanto assumimos 1 arquivo de log)
+    log_file = os.path.join(raw_dir, "pipeline.log")
+    pos_file = os.path.join(raw_dir, ".pos")  # Arquivo de controle da posição de leitura
 
-        #Passo 2: Transformação dos dados
-        logger.info("Iniciando a transformação dos dados...")
-        df_transformed = transform_data(df)  # Aplica as transformações no DataFrame
-        save_parquet(df_transformed, PROCESSED_PATH)  # Salva os dados transformados localmente
+    #Carregar última posição lida
+    pos_anterior = carregar_posicao(pos_file)
 
-        #Passo 3: Validação dos dados
-        logger.info("Validando os dados...")
-        if not validate_data(df_transformed):  # Valida o DataFrame transformado
-            logger.error("Falha na validação dos dados. O pipeline será interrompido.")
-            return
+    #Ler novas linhas de log
+    linhas, nova_pos = ler_novos_logs(log_file, pos_anterior)
 
-        #Passo 4: Carregamento para o S3
-        logger.info("Carregando dados para o S3...")
-        save_parquet_to_s3(df_transformed, 'data/processed/transactions')  # Envia para o S3
+    if not linhas:
+        logger.info("Nenhuma nova linha para processar. Encerrando.")
+        return
 
-        logger.info("Pipeline executado com sucesso!")
+    #Transformar linhas em DataFrame
+    df_transformado = transformar_linhas_em_dataframe(linhas)
+    if df_transformado.empty:
+        logger.warning("Nenhum dado válido após transformação. Encerrando.")
+        return
 
-    except Exception as e:
-        logger.error(f"Erro durante a execução do pipeline: {e}")
+    #Validar DataFrame
+    df_validado = validar_dataframe(df_transformado)
+    if df_validado.empty:
+        logger.warning("Nenhum dado válido após validação. Encerrando.")
+        return
+
+    #Salvar localmente em formato Parquet particionado
+    salvar_em_parquet(df_validado, output_dir)
+
+    #Enviar para S3, se ativado
+    if config["load"].get("use_s3", False):
+        enviar_para_s3(output_dir)
+
+    #Atualizar posição de leitura
+    salvar_posicao(pos_file, nova_pos)
+
+    logger.info("Pipeline concluído com sucesso!")
 
 if __name__ == "__main__":
-    run_pipeline()
+    main()

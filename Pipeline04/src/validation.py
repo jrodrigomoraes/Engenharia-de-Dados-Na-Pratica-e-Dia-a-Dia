@@ -1,32 +1,41 @@
 import pandas as pd
-from utils import setup_logger
+from scripts.utils import logger
 
-#Inicializa logger
-logger = setup_logger()
+#Lista de níveis válidos
+niveis_validos = ['INFO', 'WARNING', 'ERROR', 'DEBUG', 'CRITICAL']
 
-def validate_data(df):
-    """Valida a integridade e qualidade dos dados com checagens mínimas."""
+def validar_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Valida os registros do DataFrame e remove entradas incompletas ou inválidas
     
-    #Verificar colunas obrigatórias
-    required_columns = ['id_transacao', 'valor', 'categoria', 'data', 'id_cliente', 'ano_mes', 'categoria_valor']
-    if not all(col in df.columns for col in required_columns):
-        logger.error(f"Colunas obrigatórias ausentes!")
-        return False
-
-    #Verificar valores nulos
-    if df.isnull().any().any():
-        logger.error("Dados nulos encontrados.")
-        return False
-
-    #Verificar valores negativos na coluna 'valor'
-    if (df['valor'] < 0).any():
-        logger.error("Valores negativos encontrados na coluna 'valor'.")
-        return False
-
-    #Verificar unicidade do 'id_transacao'
-    if not df['id_transacao'].is_unique:
-        logger.error("A coluna 'id_transacao' não é única.")
-        return False
-
-    logger.info("Validação concluída com sucesso.")
-    return True
+    Campos Obrigatórios:
+    timestamp, level, service, host
+    """
+    colunas_esperadas = ['timestamp', 'level', 'service', 'message', 'user_id', 'host', 'data_particao']
+    
+    if df.empty:
+        logger.warning("DataFrame vazio recebido")
+        return df
+        
+    #Validar as colunas e verificar se todas estão presentes
+    
+    if set(df.columns) != set(colunas_esperadas):
+        logger.error(f"Colunas inválidas no DataFrame: {df.columns.tolist()}")
+        logger.error(f"Esperado: {colunas_esperadas}")
+        return pd.DataFrame()
+        
+    total = len(df)
+    
+    df_validado = df[
+        df['timestamp'].notna() &
+        df['level'].isin(niveis_validos) &
+        df['service'].notna() &
+        df['host'].notna()
+    ]
+    
+    validos = len(df_validado)
+    removidos = total - validos
+    
+    logger.info(f"Validação concluída: {validos} válidos, {removidos} removidos.")
+    
+    return df_validado.reset_index(drop=True)
