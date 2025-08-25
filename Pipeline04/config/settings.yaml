@@ -22,6 +22,7 @@ log_schema:
     - "message"
     - "user_id"
     - "host"
+    - "data_particao"
 
 # Validação
 validation:
