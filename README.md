@@ -126,13 +126,25 @@ Pode ser encontrado em: [Pipeline03 no GitHub](https://github.com/jrodrigomoraes
 
 ---
 
-### Pipeline 4 - Em construção...
+### Pipeline 4 -Coleta, Parsing e Armazenamento em Parquet no S3
+
+Pode ser encontrado em: [Pipeline04 no GitHub](https://github.com/jrodrigomoraes/Engenharia-de-Dados-Na-Pratica-e-Dia-a-Dia/tree/main/Pipeline04)
+
+---
+
+### Pipeline 5 - Em construção...
 
 Em produção...
 
 ---
 
-### Pipeline 5 - Em construção...
+### Pipeline 6 - Em construção....
+
+Em produção...
+
+---
+
+### Pipeline 7 - Em construção...
 
 Em produção...
 
